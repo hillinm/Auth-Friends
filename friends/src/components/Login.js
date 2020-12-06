@@ -1,5 +1,7 @@
 import React from 'react';
-import { axiosWithAuth } from "../utils/axiosWithAuth";
+import axiosWithAuth from "../utils/axiosWithAuth";
+import Button from "@material-ui/core/Button";
+import 'fontsource-roboto';
 import "./component.css"
 
 class Login extends React.Component {
@@ -29,14 +31,15 @@ class Login extends React.Component {
             .post('/api/login', this.state.credentials)
             .then(res => {
                 console.log(res)
-                localStorage.setItem('token', res.data.payload)
+                window.localStorage.setItem('token', res.data.payload)
                 this.setState({...this.state, isLoading: false });
-                this.props.history.push('/protected');
+                this.props.history.push('/friendlist');
             })
             .catch(err => {
                 console.log(err)
             });
         };
+        
     render() {
         return (
             <div className="Container">
@@ -58,7 +61,9 @@ class Login extends React.Component {
                     />
                 </div>
                 <div>
-                    <button>LOGIN</button>
+                <Button type="submit" variant="contained" color="primary">
+                    LOGIN
+                </Button>
                 </div>
                 </form>
             </div>

@@ -1,5 +1,6 @@
 import React from 'react';
-import { axiosWithAuth } from '../utils/axiosWithAuth';
+import axiosWithAuth from '../utils/axiosWithAuth';
+import Button from '@material-ui/core/Button';
 
 class AddFriend extends React.Component {
     constructor() {
@@ -17,19 +18,16 @@ class AddFriend extends React.Component {
     submitHandler = e => {
         e.preventDefault();
         axiosWithAuth()
-        .post("/api/friends", this.state.friend, {
-            headers:
-            {
-                authorization: window.localStorage.getItem('token')
-            }
+        .post("/api/friends", this.state.friend)
+        .then((res) => {
+            console.log("Submit", res.data)
         })
-        .then(res => console.log(res))
-        .catch(err => console.log(err))
+        .catch((err) => console.log("Error", err));
     }
 
     changeHandler = e => {
         this.setState( {friend: {...this.state.friend, [e.target.name]: e.target.value}})
-        console.log(this.state)
+        console.log("This is the state", this.state)
     }
 
     render() {
@@ -63,7 +61,9 @@ class AddFriend extends React.Component {
                     />
                 </div>
                 <div>
-                    <button>ADD FRIEND</button>
+                <Button type="submit" variant="contained" color="primary">
+                    Add
+                </Button>
                 </div>
                 </form>
                 </div>

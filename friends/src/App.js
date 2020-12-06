@@ -4,27 +4,40 @@ import PrivateRoute from "./components/PrivateRoute";
 import AddFriend from "./components/AddFriend";
 import FriendList from "./components/FriendList";
 import Login from "./components/Login";
+
 import './App.css';
 
-class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {credentials: {} };
+function App () {
+  const logout = () => {
+    localStorage.removeItem('token')
   }
-  render() {
+
   return (
     <Router>
-      <Link to="/friendlist">Friends List</Link>
-      <Link to="/addfriend">Add Friend</Link>
-      <Link to="/login">LOGIN</Link>
+      <div className="App">
+        <ul>
+          <li>
+          <Link to="/friendlist">Friends List</Link>
+          </li>
+          <li>
+          <Link to="/addfriend">Add Friend</Link>
+          </li>
+          <li>
+          <Link to="/login">LOGIN</Link>
+          </li>
+          <li>
+          <Link onClick={logout}>LOGOUT</Link>
+          </li>
+        </ul>
       <Switch>
-        <Route path="/login" component={Login} />
         <PrivateRoute exact path="/addfriend" component={AddFriend} />
         <PrivateRoute exact path="/friendlist" component={FriendList} />
+        <Route path="/login" component={Login} />
+        <Route component={Login} />
       </Switch>
+      </div>
     </Router>
   );
-}
 }
 
 export default App;
